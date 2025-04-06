@@ -4,10 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>Photo Gallery</title>
+    <link rel="icon" href="camera-50.png" type="image/png">
 </head>
+
 <body>
-    <p>First commit</p>
+
+    <nav class="navbar">
+        <div class="logo">My Gallery</div>
+        <div class="menu-toggle" id="menu-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="nav-links" id="nav-links">
+          <a href="viri.html" onclick="helpMenu()">resources</a>
+          <a href="#" onclick="sortImages()">Sort</a>
+          <a href="#" onclick="searchImages()">Search</a>
+          <a href="#" onclick="addPhoto()">Add</a>
+          <a href="#" onclick="location.reload()">Refresh</a>
+        </div>
+    </nav>
+
+    <div class="flex-container"></div>
+    
+    <div id="photoForm" class="photo-form">
+        <h3>Add a Photo</h3>
+        <form id="imageForm">
+            <div id="drop-area" class="drop-area" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <p>Drag & Drop an image here</p>
+                <input type="file" id="fileInput" accept="image/*" onchange="previewImage(event)" style="display: none;">
+            </div>
+            
+            <div id="imagePreview" class="image-preview"></div>
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="4" placeholder="Enter a description..." required></textarea>
+
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author" placeholder="Enter the author's name" required>
+
+            <button type="submit">Submit</button>
+            <button type="button" onclick="closeForm()">Cancel</button>
+        </form>
+    </div>
+
+    <div id="photoModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modalImage" src="1" alt="Image Preview">
+            <div id="modalDescription">
+                <h2 id="modalAuthor">1</h2>
+                <p id="modalDescriptionText"></p>
+                <p id="modalImageSize"></p>
+            </div>
+            <button id="removePhotoBtn" class="remove-button" onclick="removePhoto()">Remove</button>
+            <button id="editPhotoBtn" class="edit-button" onclick="editPhoto()">Edit</button>
+        </div>
+    </div>
+
+    <div class="sort-menu" id ="sort-menu" style="text-align: center; margin-bottom: 20px;">
+        <p>All sorts are ascending</p>
+        <span class="close" onclick="closeSort()">&times;</span>
+        <label for="sortSelect">Sort by:</label>
+        <select id="sortSelect" onchange="sortImages()">
+            <option value="">-- Select --</option>
+            <option value="descriptionLength">Description Length</option>
+            <option value="authorAZ">Author (A-Z)</option>
+            <option value="imageSize">Image Size</option>
+        </select>
+    </div>
+
+    <div class="search-form" id="search-form" style="text-align: center; margin-bottom: 20px;">
+        <span class="close" onclick="closeSearch()">&times;</span>
+        <label for="authorSearch">Author:</label>
+        <input type="text" id="authorSearch" placeholder="Enter author name">
+    
+        <label for="descriptionSearch">Description:</label>
+        <input type="text" id="descriptionSearch" placeholder="Enter description">
+    
+        <label for="sizeSearch">Image Size MIN (KB):</label>
+        <input type="range" id="sizeSearch" min="0" max="1000" value="0" step="10" oninput="updateSizeLabel(this.value)">
+        <span id="sizeLabel">0 KB</span><br>
+    
+        <button onclick="searchImages()">Search</button>
+    </div>
+
     <script src="script.js"></script>
 </body>
+
 </html>
